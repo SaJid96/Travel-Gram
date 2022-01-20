@@ -8,6 +8,9 @@ import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 
 import {readAndCompressImage} from 'browser-image-resizer'
+import { imageConfig } from 'src/utils/config';
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -17,6 +20,7 @@ export class SignupComponent implements OnInit {
   picture: string =
     'https://learnyst.s3.amazonaws.com/assets/schools/2410/resources/images/logo_lco_i3oab.png';
 
+    uploadPercent :number =null;
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -59,6 +63,62 @@ this.db.object(`/users/${uid}`).set({
     })
 
   }
+
+
+async uploadFile(event:any){
+
+  const file=event.target.files[0];
+
+
+  let resizedImaged = await readAndCompressImage(file,imageConfig)
+
+  const filePath=file.name
+
+  const fileRef=this.storage.ref(filePath)
+
+
+  const task =this.storage.upload(filePath,resizedImaged);
+
+  task.percentageChanges().subscribe((percentage)=>{
+
+    this.uploadPercent=percentage
+  })
+
+  task.snapshotChanges()
+  .pipe(
+
+
+    finalize(()=>{
+      fileRef.getDownloadURL().subscribe(
+        (url)=>{
+
+          this.picture=url;
+          this.toastr.success("Image uploaded succesfully")
+        }
+      )
+    })
+
+  )
+  .subscribe()
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
