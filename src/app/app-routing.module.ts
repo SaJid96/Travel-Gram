@@ -1,45 +1,44 @@
 import { NgModule } from '@angular/core';
-import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { AddpostComponent } from './pages/addpost/addpost.component';
-import { HomeComponent } from './pages/home/home.component';
 import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.component';
+import { HomeComponent } from './pages/home/home.component';
 import { SigninComponent } from './pages/signin/signin.component';
 import { SignupComponent } from './pages/signup/signup.component';
 
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+  redirectLoggedInTo,
+} from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['signin']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
-
-
-
-
 
 const routes: Routes = [
   {
     path: 'signin',
     component: SigninComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGaurdPipe: redirectLoggedInToHome },
+    data: { authGuardPipe: redirectLoggedInToHome },
   },
-  ,
   {
     path: 'signup',
     component: SignupComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGaurdPipe: redirectLoggedInToHome },
+    data: { authGuardPipe: redirectLoggedInToHome },
   },
   {
     path: 'addpost',
     component: AddpostComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGaurdPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: '',
     component: HomeComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGaurdPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: '**',
@@ -49,6 +48,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
