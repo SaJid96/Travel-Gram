@@ -5,13 +5,7 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyC2asOiuFz2taQbvEfdiFJ5wcCqhkspV7s',
-    authDomain: 'angular69-96b62.firebaseapp.com',
-    databaseURL: 'https://angular69-96b62-default-rtdb.firebaseio.com/',
-    projectId: 'angular69-96b62',
-    storageBucket: 'angular69-96b62.appspot.com',
-    messagingSenderId: '45648182145',
-    appId: '1:45648182145:web:8173ff8e0986d017580680',
+    
   },
 };
 
