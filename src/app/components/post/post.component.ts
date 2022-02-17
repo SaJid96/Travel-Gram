@@ -21,7 +21,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class PostComponent implements OnInit, OnChanges {
   @Input()
   post;
-
+ 
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
   faShareSquare = faShareSquare;
